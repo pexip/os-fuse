@@ -1,0 +1,124 @@
+Index: b/util/fusermount.c
+===================================================================
+--- a/util/fusermount.c
++++ b/util/fusermount.c
+@@ -45,6 +45,16 @@
+ #define MS_PRIVATE (1<<18)
+ #endif
+ 
++#ifndef UMOUNT_DETACH
++#define UMOUNT_DETACH	0x00000002	/* Just detach from the tree */
++#endif
++#ifndef UMOUNT_NOFOLLOW
++#define UMOUNT_NOFOLLOW	0x00000008	/* Don't follow symlink on umount */
++#endif
++#ifndef UMOUNT_UNUSED
++#define UMOUNT_UNUSED	0x80000000	/* Flag guaranteed to be unused */
++#endif
++
+ static const char *progname;
+ 
+ static int user_allow_other = 0;
+@@ -325,7 +335,7 @@
+ 	return 0;
+ }
+ 
+-static int chdir_to_parent(char *copy, const char **lastp, int *currdir_fd)
++static int chdir_to_parent(char *copy, const char **lastp)
+ {
+ 	char *tmp;
+ 	const char *parent;
+@@ -350,14 +360,6 @@
+ 		parent = "/";
+ 	}
+ 
+-	*currdir_fd = open(".", O_RDONLY);
+-	if (*currdir_fd == -1) {
+-		fprintf(stderr,
+-			"%s: failed to open current directory: %s\n",
+-			progname, strerror(errno));
+-		return -1;
+-	}
+-
+ 	res = chdir(parent);
+ 	if (res == -1) {
+ 		fprintf(stderr, "%s: failed to chdir to %s: %s\n",
+@@ -380,12 +382,26 @@
+ 	return 0;
+ }
+ 
++/* Check whether the kernel supports UMOUNT_NOFOLLOW flag */
++static int umount_nofollow_support(void)
++{
++	int res = umount2("", UMOUNT_UNUSED);
++	if (res != -1 || errno != EINVAL)
++		return 0;
++
++	res = umount2("", UMOUNT_NOFOLLOW);
++	if (res != -1 || errno != ENOENT)
++		return 0;
++
++	return 1;
++}
++
+ static int unmount_fuse_locked(const char *mnt, int quiet, int lazy)
+ {
+-	int currdir_fd = -1;
++	int res;
+ 	char *copy;
+ 	const char *last;
+-	int res;
++	int umount_flags = lazy ? UMOUNT_DETACH : 0;
+ 
+ 	if (getuid() != 0) {
+ 		res = may_unmount(mnt, quiet);
+@@ -399,31 +415,35 @@
+ 		return -1;
+ 	}
+ 
+-	res = chdir_to_parent(copy, &last, &currdir_fd);
++	res = chdir_to_parent(copy, &last);
+ 	if (res == -1)
+ 		goto out;
+ 
+-	res = check_is_mount(last, mnt);
+-	if (res == -1)
+-		goto out;
++	if (umount_nofollow_support()) {
++		umount_flags |= UMOUNT_NOFOLLOW;
++	} else {
++		res = check_is_mount(last, mnt);
++		if (res == -1)
++			goto out;
++	}
+ 
+-	res = umount2(last, lazy ? 2 : 0);
++	res = umount2(last, umount_flags);
+ 	if (res == -1 && !quiet) {
+-		fprintf(stderr,
+-			"%s: failed to unmount %s: %s\n",
++		fprintf(stderr, "%s: failed to unmount %s: %s\n",
+ 			progname, mnt, strerror(errno));
+ 	}
+ 
+-	if (res == 0)
+-		res = fuse_mnt_remove_mount(progname, mnt);
+ out:
+-	free(copy);
+-	if (currdir_fd != -1) {
+-		fchdir(currdir_fd);
+-		close(currdir_fd);
++	if (res == -1)
++		return -1;
++
++	res = chdir("/");
++	if (res == -1) {
++		fprintf(stderr, "%s: failed to chdir to '/'\n", progname);
++		return -1;
+ 	}
+ 
+-	return res;
++	return fuse_mnt_remove_mount(progname, mnt);
+ }
+ 
+ static int unmount_fuse(const char *mnt, int quiet, int lazy)

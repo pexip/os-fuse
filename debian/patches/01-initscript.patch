@@ -1,0 +1,15 @@
+Author: Bartosz Fenski <fenio@debian.org>
+Description: Upstream build system should not run update-rc.d.
+
+diff -Naurp fuse.orig/util/Makefile.in fuse/util/Makefile.in
+--- fuse.orig/util/Makefile.in	2011-05-26 08:16:03.543551660 +0200
++++ fuse/util/Makefile.in	2011-05-26 08:33:56.372871535 +0200
+@@ -597,7 +597,7 @@ install-exec-local:
+ 	$(INSTALL_SCRIPT) $(srcdir)/init_script $(DESTDIR)$(INIT_D_PATH)/fuse
+ 	@if test -x /usr/sbin/update-rc.d; then \
+ 		echo "/usr/sbin/update-rc.d fuse start 34 S . start 41 0 6 . || true"; \
+-		/usr/sbin/update-rc.d fuse start 34 S . start 41 0 6 . || true; \
++		#/usr/sbin/update-rc.d fuse start 34 S . start 41 0 6 . || true; \
+ 	fi
+ 
+ install-data-local:

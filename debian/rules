@@ -1,0 +1,52 @@
+#!/usr/bin/make -f
+
+SHELL := sh -e
+
+%:
+	dh ${@} --with autotools_dev
+
+override_dh_auto_configure:
+	dh_auto_configure -- --bindir=/bin
+
+override_dh_builddeb:
+	dh_builddeb -- -Zgzip -z9
+
+override_dh_compress:
+	dh_compress -Xusr/share/doc/libfuse-dev/examples
+
+override_dh_fixperms:
+	dh_fixperms
+
+	if [ -e debian/fuse/bin/fusermount ]; \
+	then \
+		chmod 4755 debian/fuse/bin/fusermount; \
+	fi
+
+override_dh_install:
+	# remove unused files
+	rm -f debian/tmp/etc/init.d/fuse
+	rm -f debian/tmp/etc/udev/rules.d/99-fuse.rules
+	rm -f debian/tmp/usr/lib/*.la
+
+	dh_install --fail-missing
+
+	# adding initramfs-tools integration
+	install -D -m 0755 debian/local/fuse.hook debian/fuse/usr/share/initramfs-tools/hooks/fuse
+
+override_dh_installinit:
+	#dh_installinit --no-restart-on-upgrade --no-start --update-rcd-params='start 9 S .'
+
+override_dh_link:
+	# correcting symlink targets
+	for LIB in debian/tmp/usr/lib/*.so; \
+	do \
+		dh_link -plibfuse-dev lib/$$(basename $$(readlink $${LIB})) usr/lib/$$(basename $${LIB}); \
+	done
+
+	dh_link --remaining-packages
+
+override_dh_makeshlibs:
+	dh_makeshlibs -s -V "libfuse2 (>= 2.8.1)" --add-udeb=libfuse2-udeb
+
+override_dh_strip:
+	dh_strip --dbg-package=fuse-dbg

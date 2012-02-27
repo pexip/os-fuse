@@ -1,0 +1,5 @@
+bin/fusermount
+bin/ulockmgr_server
+sbin/mount.fuse
+
+debian/local/fuse.conf	/etc
