@@ -1,11 +1,13 @@
 Source: fuse
 Section: utils
 Priority: optional
-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+Maintainer: Pexip AS <packaging@pexip.com>
+XSBC-Pexip-Original-Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
 XSBC-Original-Maintainer: Daniel Baumann <daniel.baumann@progress-technologies.net>
 Build-Depends: debhelper (>= 8), autotools-dev, libselinux-dev [linux-any]
 Standards-Version: 3.9.2
 Homepage: http://fuse.sourceforge.net/
+XS-Pexip-Upstream: http://archive.ubuntu.com/ubuntu/ precise
 
 Package: fuse
 Section: utils

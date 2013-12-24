@@ -1,3 +1,9 @@
+fuse (2.8.6-2ubuntu2pexip1) pexip; urgency=low
+
+  * Prepare Pexip packaging
+
+ -- John-Mark Bell <jmb@pexip.com>  Tue, 24 Dec 2013 17:03:27 +0000
+
 fuse (2.8.6-2ubuntu2) precise; urgency=low
 
   * debian/patches/06-clone_newns.patch:
