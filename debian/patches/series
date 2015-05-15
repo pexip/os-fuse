@@ -4,3 +4,4 @@
 04-cve-2011-0542.patch
 05-umount-nofollow.patch
 06-clone_newns.patch
+CVE-2015-3202.patch

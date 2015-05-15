@@ -1,3 +1,12 @@
+fuse (2.8.6-2ubuntu2.1) precise-security; urgency=medium
+
+  * SECURITY UPDATE: privilege escalation via insecure environment
+    - debian/patches/CVE-2015-3202.patch: use execle to run external
+      helpers in lib/mount_util.c.
+    - CVE-2015-3202
+
+ -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 15 May 2015 08:41:01 -0400
+
 fuse (2.8.6-2ubuntu2) precise; urgency=low
 
   * debian/patches/06-clone_newns.patch:
