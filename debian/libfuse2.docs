@@ -3,4 +3,5 @@ FAQ
 NEWS
 README
 README.NFS
-doc/*
+doc/*.txt
+doc/how-fuse-works

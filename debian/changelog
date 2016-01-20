@@ -1,35 +1,301 @@
-fuse (2.8.6-2ubuntu2.1) precise-security; urgency=medium
+fuse (2.9.3-15+deb8u2) jessie-security; urgency=high
 
-  * SECURITY UPDATE: privilege escalation via insecure environment
-    - debian/patches/CVE-2015-3202.patch: use execle to run external
-      helpers in lib/mount_util.c.
-    - CVE-2015-3202
+  * Fix permissions on cuse character device to be accessible by root only.
 
- -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Fri, 15 May 2015 08:41:01 -0400
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Wed, 20 Jan 2016 19:58:39 +0100
 
-fuse (2.8.6-2ubuntu2) precise; urgency=low
+fuse (2.9.3-15+deb8u1) jessie-security; urgency=high
 
-  * debian/patches/06-clone_newns.patch:
-    Define _GNU_SOURCE in util/fusermount.c to make CLONE_NEWNS available
-    (picked from upstream git; fixes FTBFS; lp: #935514)
+  * Non-maintainer upload by the Security Team.
+  * Add 0007-CVE-2015-3202.patch patch.
+    CVE-2015-3202: Missing scrubbing of the environment before executing a
+    mount or umount of a filesystem.
 
- -- Michael Bienia <geser@ubuntu.com>  Mon, 27 Feb 2012 15:13:25 +0100
+ -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 21 May 2015 07:48:41 +0200
 
-fuse (2.8.6-2ubuntu1) precise; urgency=low
+fuse (2.9.3-15) unstable; urgency=low
 
-  * Resynchronise with Debian (LP: #884907).  Remaining changes:
-    - Don't install the init script; we require the fuse module to be
-      built-in, and mountall handles mounting /sys/fs/fuse/connections.
-    - Call update-initramfs in postinst.
-    - Install ulockmgr_server in fuse-udeb.
-    - Install fusermount with 4755 permissions (remaining change from
-      "Dynamic foreground user access").
-    - Use UMOUNT_NOFOLLOW if available to avoid following symlinks in
-      fusermount.
-    - Only change the ownership or mode of /etc/fuse.conf in postinst on
-      initial installation.
+  * Use correct long option for udevadm in postinst (closes: #756582).
 
- -- Colin Watson <cjwatson@ubuntu.com>  Thu, 24 Nov 2011 23:07:21 +0000
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Thu, 31 Jul 2014 20:07:21 +0000
+
+fuse (2.9.3-14) unstable; urgency=low
+
+  * New maintainer (closes: #756548).
+  * Add watch file.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Wed, 30 Jul 2014 20:33:25 +0000
+
+fuse (2.9.3-13) unstable; urgency=low
+
+  * I don't care anymore, not worth it.. orphaning.
+
+ -- Daniel Baumann <daniel@laptop.127011.net>  Fri, 25 Jul 2014 16:33:54 +0200
+
+fuse (2.9.3-12) unstable; urgency=low
+
+  * Cherry-picking patch from upstream for arm64 (Closes: #752081).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Fri, 20 Jun 2014 08:27:34 +0200
+
+fuse (2.9.3-11) unstable; urgency=low
+
+  * Improving fuse.postinst to handle device creation a bit better
+    (Closes: #743360).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sat, 14 Jun 2014 21:25:15 +0200
+
+fuse (2.9.3-10) unstable; urgency=low
+
+  * Conditionally only trigger udevadm only when /dev/fuse has already
+    been available (Closes: #745295).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sat, 03 May 2014 12:16:17 +0200
+
+fuse (2.9.3-9) unstable; urgency=low
+
+  * Loading fuse module in postinst to cover some edge cases where udev
+    reloading would fail (Closes: #743360).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sat, 05 Apr 2014 11:32:44 +0200
+
+fuse (2.9.3-8) unstable; urgency=low
+
+  * Building with dh --parallel.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Mon, 31 Mar 2014 19:50:34 +0200
+
+fuse (2.9.3-7) experimental; urgency=low
+
+  * Adding patch from Fabrice Bauzac <fbauzac@amadeus.com> to use dlsym()
+    instead of relying on ld.so constructor functions to load modules
+    (Closes: #737143).
+  * Updating year in copyright for 2014.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sat, 01 Feb 2014 05:54:44 +0100
+
+fuse (2.9.3-6) experimental; urgency=low
+
+  * Adding explicit permissions to udev rule for device nodes.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sat, 28 Dec 2013 20:49:22 +0100
+
+fuse (2.9.3-5) experimental; urgency=low
+
+  * Updating to standards version 3.9.5.
+  * Building with dh-autoreconf (Closes: #732285).
+  * Dropping fuse group (Closes: #733312).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sat, 28 Dec 2013 15:16:28 +0100
+
+fuse (2.9.3-4) experimental; urgency=low
+
+  * Updating vcs fields.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 17 Oct 2013 10:05:12 +0200
+
+fuse (2.9.3-3) experimental; urgency=low
+
+  * Simplyfing libfuse2 symbols by marking linux-only symbols as linux-
+    only rather than to ship two different sets for linux and kfreebsd,
+    thanks to Pino Toscano <pino@debian.org> (Closes: #717197).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Wed, 17 Jul 2013 22:35:26 +0200
+
+fuse (2.9.3-2) experimental; urgency=low
+
+  * Adding vcs fields.
+  * Wrapping control fields.
+  * Adding lintian overrides.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Wed, 17 Jul 2013 13:10:22 +0200
+
+fuse (2.9.3-1) experimental; urgency=low
+
+  * Merging upstream version 2.9.3.
+  * Updating year in copyright file.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Tue, 02 Jul 2013 17:53:03 +0200
+
+fuse (2.9.2-9) experimental; urgency=low
+
+  * Updating kfreebsd symbols files again.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Tue, 11 Jun 2013 17:44:22 +0200
+
+fuse (2.9.2-8) experimental; urgency=low
+
+  * Correcting fuse-dbg package description.
+  * Harmonizing dpkg-statoverride calls in postinst.
+  * Excluding package on hurd by explicitly listing linux-any and
+    kfreebsd-any, it doesn't build on hurd anyway.
+  * Adding kfreebsd specific symbols file for libfuse2.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 06 Jun 2013 08:02:49 +0200
+
+fuse (2.9.2-7) experimental; urgency=low
+
+  * Creating an udev event rather than reloading udev (Closes: #679930).
+  * Only creating /dev/fuse with MAKEDEV if it doesn't already exist.
+  * Clarify manpage that fusermount is used for unmounting only these days
+    (Closes: #651556).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Tue, 04 Jun 2013 22:27:29 +0200
+
+fuse (2.9.2-6) experimental; urgency=low
+
+  * Adding initial symbols file for libfuse, thanks to Pino Toscano
+    <pino@debian.org> (Closes: #559473).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Tue, 04 Jun 2013 18:56:30 +0200
+
+fuse (2.9.2-5) experimental; urgency=low
+
+  * Including header files in examples (Closes: #626522).
+  * Prefixing patches with four digits in filenames.
+  * Trimming diff headers in patches.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 23 May 2013 14:50:28 +0200
+
+fuse (2.9.2-4) unstable; urgency=low
+
+  * Removing all references to my old email address.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sun, 10 Mar 2013 20:29:13 +0100
+
+fuse (2.9.2-3) unstable; urgency=low
+
+  * Updating year in copyright.
+  * Removing fuse.preinst with squeeze-to-wheezy upgrade cleanup.
+  * Adding dpkg-source local-options.
+  * Dropping dpkg-source compression level.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 24 Jan 2013 12:18:47 +0100
+
+fuse (2.9.2-2) unstable; urgency=low
+
+  * Removing fuse group in postrm, thanks to Tom Jampen
+    <tom@cryptography.ch>.
+  * Also rebuilding initramfs on fuse removal.
+  * Removing pre-wheezy udev detection in postinst for device creation.
+  * Updating to standards version 3.9.4.
+  * Building without conditional multiarch support for pre-wheezy.
+  * Dropping pre-wheezy transitional package.
+  * Dropping pre-wheezy breaks against loop-aes-utils.
+  * Removing configuration file on purge.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 13 Dec 2012 12:10:35 +0100
+
+fuse (2.9.2-1) unstable; urgency=low
+
+  * Merging upstream version 2.9.2.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Fri, 19 Oct 2012 12:47:21 +0200
+
+fuse (2.9.1-1) unstable; urgency=low
+
+  * Merging upstream version 2.9.1.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Fri, 21 Sep 2012 19:07:33 +0200
+
+fuse (2.9.0-5) unstable; urgency=low
+
+  * Adjusting permission on fusermount conditionally upon build
+    architecture (Closes: #680232).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 05 Jul 2012 16:54:23 +0200
+
+fuse (2.9.0-4) unstable; urgency=low
+
+  * Some editorial changes to copyright file.
+  * Removing sysvinit start and stop links before removing fuse
+    initscript (Closes: #679608).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sat, 30 Jun 2012 15:51:06 +0200
+
+fuse (2.9.0-3) unstable; urgency=low
+
+  * Simplyfing backports compatible use of multiarch debhelper install
+    files.
+  * Correcting typo in conditional gencontrol call in rules.
+  * Updating GPL boilerplate in copyright file.
+  * Switching to xz compression.
+  * Using make conditionals instead of shell conditional in rules for
+    consistency.
+  * Removing old dpkg trigger for initramfs-tools.
+  * Automatically loading fuse kernel module with kmod.
+  * Removing old initscript in preinst (Closes: #670635).
+  * Rewrapping default fuse.conf.
+  * Adding /dev/cuse to fuse rule (Closes: #668509).
+  * Reloading udev in postinst (Closes: #568644, #617667, #628375).
+  * Adjusting section and priority of the transitional package.
+  * Using official package-type for udeb packages in control now.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Fri, 29 Jun 2012 17:42:25 +0200
+
+fuse (2.9.0-2) unstable; urgency=low
+
+  * Correcting debhelper docs file to not include unwanted files
+    (Closes: ##674198).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 21 Jun 2012 13:52:01 +0200
+
+fuse (2.9.0-1) unstable; urgency=low
+
+  * Updating compression handling for udeb with newer debhelper.
+  * Merging upstream version 2.9.0.
+  * Rediffing initscript.patch.
+  * Rediffing kfreebsd.patch.
+  * Rediffing examples.patch.
+  * Removing cve-2011-0542.patch, included upstream.
+  * Removing ftbfs.patch, included upstream.
+  * Removing local manpages, included upstream.
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Fri, 18 May 2012 08:25:16 +0200
+
+fuse (2.8.7-2) unstable; urgency=low
+
+  * Removing initscript in favour of udev rule, thanks to Josh Triplett
+    <josh@joshtriplett.org> (Closes: #667988, #601546).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Mon, 16 Apr 2012 09:32:12 +0000
+
+fuse (2.8.7-1) unstable; urgency=low
+
+  * Replacing conflicts against loop-aes-utils with a versioned breaks
+    (Closes: #662237).
+  * Merging upstream version 2.8.7.
+  * Updating to debhelper version 9.
+  * Updating to standards version 3.9.3.
+  * Updating copyright file machine-readable format version 1.0.
+  * Enabling hardening buildflags.
+  * Making multi-arch support conditional.
+
+ -- Daniel Baumann <daniel.baumann@progress-linux.org>  Tue, 13 Mar 2012 20:36:48 +0100
+
+fuse (2.8.6-4) unstable; urgency=low
+
+  * Prefixing readme to assign it to the fuse package only.
+  * Correcting accidentally wrong debhelper install file for libfuse2
+    which resulted in having the so links in /usr/lib instead of /lib.
+  * Adjusting /lib for multiarch (Closes: #650354, #650681, #651189).
+  * Correcting spelling typo in mount.fuse manpage, thanks to A. Costa
+    <agcosta@gis.net> (Closes: #646676).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Wed, 07 Dec 2011 08:40:57 +0100
+
+fuse (2.8.6-3) unstable; urgency=low
+
+  * Adding patch from YunQiang Su <wzssyqa@gmail.com> to fix FTBFS when
+    use -Wformat -Wformat-security -Werror=format-security (Closes:
+    #647876).
+  * Adding support for multiarch, thanks to YunQiang Su
+    <wzssyqa@gmail.com> (Closes: #647876).
+  * Finishing initramfs integration (Closes: #649941).
+  * Consulting dpkg-stateoverride before resetting owner and permission
+    for /etc/fuse.conf in fuse postinst (Closes: #649942).
+
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Mon, 28 Nov 2011 15:34:53 +0100
 
 fuse (2.8.6-2) unstable; urgency=low
 
@@ -53,7 +319,7 @@ fuse (2.8.6-2) unstable; urgency=low
   * Updating todo file.
   * Removing double entries in 2.8.5-4 section of debian changelog.
 
- -- Daniel Baumann <daniel.baumann@progress-technologies.net>  Sun, 23 Oct 2011 11:07:53 +0200
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sun, 23 Oct 2011 11:07:53 +0200
 
 fuse (2.8.6-1) unstable; urgency=low
 
@@ -63,7 +329,7 @@ fuse (2.8.6-1) unstable; urgency=low
   * Removing cve-2011-0543.patch, included upstream.
   * Renumbering remaining patches.
 
- -- Daniel Baumann <daniel.baumann@progress-technologies.net>  Wed, 28 Sep 2011 08:13:03 +0200
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Wed, 28 Sep 2011 08:13:03 +0200
 
 fuse (2.8.5-5) unstable; urgency=low
 
@@ -71,7 +337,7 @@ fuse (2.8.5-5) unstable; urgency=low
   * Using linux-any in build-depends rather than negatively listing
     kfreebsd (Closes: #634321).
 
- -- Daniel Baumann <daniel.baumann@progress-technologies.net>  Thu, 08 Sep 2011 20:30:29 +0200
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 08 Sep 2011 20:30:29 +0200
 
 fuse (2.8.5-4) unstable; urgency=low
 
@@ -82,14 +348,14 @@ fuse (2.8.5-4) unstable; urgency=low
   * Updating todo file.
   * Removing obsolete --disable-kernel-module from configure call.
 
- -- Daniel Baumann <daniel.baumann@progress-technologies.net>  Sun, 10 Jul 2011 17:07:36 +0200
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Sun, 10 Jul 2011 17:07:36 +0200
 
 fuse (2.8.5-3) unstable; urgency=low
 
   * Updating udev check in postinst to also look for /run (Closes:
     #628050).
 
- -- Daniel Baumann <daniel.baumann@progress-technologies.net>  Fri, 03 Jun 2011 10:17:31 +0200
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Fri, 03 Jun 2011 10:17:31 +0200
 
 fuse (2.8.5-2) unstable; urgency=low
 
@@ -108,7 +374,7 @@ fuse (2.8.5-2) unstable; urgency=low
   * Updating source section.
   * Adding debug package.
 
- -- Daniel Baumann <daniel.baumann@progress-technologies.net>  Thu, 26 May 2011 14:47:38 +0200
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 26 May 2011 14:47:38 +0200
 
 fuse (2.8.5-1) experimental; urgency=low
 
@@ -148,14 +414,14 @@ fuse (2.8.5-1) experimental; urgency=low
   * Dropping la files (Closes: #621309).
   * Adding todo file.
 
- -- Daniel Baumann <daniel.baumann@progress-technologies.net>  Thu, 26 May 2011 11:01:16 +0200
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Thu, 26 May 2011 11:01:16 +0200
 
 fuse (2.8.4-2) unstable; urgency=low
 
   * Taking over package from Bartosz and Adam with thanks for their past
     contributions, both of them are MIA.
 
- -- Daniel Baumann <daniel.baumann@progress-technologies.net>  Tue, 24 May 2011 20:04:54 +0200
+ -- Daniel Baumann <mail@daniel-baumann.ch>  Tue, 24 May 2011 20:04:54 +0200
 
 fuse (2.8.4-1.5) unstable; urgency=low
 
@@ -163,27 +429,6 @@ fuse (2.8.4-1.5) unstable; urgency=low
   * Only build fuse-utils-udeb on Linux architectures.
 
  -- Colin Watson <cjwatson@debian.org>  Fri, 20 May 2011 13:00:49 +0100
-
-fuse (2.8.4-1.4ubuntu1) oneiric; urgency=low
-
-  * Resynchronise with Debian.  Remaining changes:
-    - Add Breaks to ensure right version of udev is used.
-    - Use udev rules instead of init script.
-    - Add initramfs support, for booting from ntfs-3g in wubi.
-    - Install ulockmgr_server.
-    - Move fusermount and ulockmgr_server to /bin and associated libraries
-      to /lib. This allows mounting ntfs filesystems in /etc/fstab.
-    - Install fusermount with 4755 permissions (remaining change from
-      "Dynamic foreground user access").
-    - Don't fail in postinst if udev is running and /dev/fuse does not
-      exist.
-    - Remove old modprobe and udev configuration files on upgrade if
-      unmodified.
-    - Security updates: arbitrary unprivileged unmount.
-    - Don't change the ownership or mode of /etc/fuse.conf in postinst
-      unless we're also adding the fuse group for the first time.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Wed, 18 May 2011 11:02:10 +0100
 
 fuse (2.8.4-1.4) unstable; urgency=low
 
@@ -207,82 +452,6 @@ fuse (2.8.4-1.2) unstable; urgency=low
 
  -- Konstantinos Margaritis <markos@debian.org>  Thu, 24 Feb 2011 12:42:25 +0000
 
-fuse (2.8.4-1.1ubuntu4) natty; urgency=low
-
-  * SECURITY UPDATE: arbitrary unprivileges unmount
-    - debian/patches/005-CVE-2011-0541.patch: don't follow symlinks when
-      unmounting in case of a failed mtab update in util/fusermount.c.
-    - debian/patches/006-CVE-2011-0542.patch: chdir to / before performing
-      mount/umount in util/fusermount.c.
-    - debian/patches/007-CVE-2011-0543.patch: remove legacy util-linux
-      support so symlinks don't get followed upon fallback in
-      lib/mount_util.c, util/fusermount.c. Remove unneeded
-      --disable-legacy-umount option in configure.in.
-    - debian/rules: remove dh_autoreconf and obsolete
-      --disable-legacy-umount configure option.
-    - debian/control: Remove dh-autoreconf from Build-Depends.
-    - CVE-2011-0541
-    - CVE-2011-0542
-    - CVE-2011-0543
-  * Removed unused 003-CVE-2009-3297.dpatch patch.
-
- -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Thu, 10 Feb 2011 14:55:36 -0500
-
-fuse (2.8.4-1.1ubuntu3) natty; urgency=low
-
-  * debian/fuse-utils.postinst:
-    Respect local modifications to /etc/fuse.conf by not changing the
-    ownership or mode of /etc/fuse.conf in the postinst file unless we're
-    also adding the fuse group for the first time. (LP: #697792)
-
- -- Barry Warsaw <barry@ubuntu.com>  Fri, 21 Jan 2011 11:13:06 -0500
-
-fuse (2.8.4-1.1ubuntu2) natty; urgency=low
-
-  * SECURITY UPDATE: arbitrary unprivileged unmount (LP: #670622)
-    - debian/patches/004-CVE-2010-3879.dpatch: Use umount --fake to update
-      /etc/mtab.
-    - debian/control: make libfuse2 depend on version of mount that
-      contains backported --fake support. Add dh-autoreconf to Build-Depends.
-    - debian/rules: add dh_autoreconf and build with --disable-legacy-umount.
-    - CVE-2010-3879
-
- -- Marc Deslauriers <marc.deslauriers@ubuntu.com>  Wed, 19 Jan 2011 14:31:21 -0500
-
-fuse (2.8.4-1.1ubuntu1) natty; urgency=low
-
-  * Resynchronise with Debian.  Remaining changes:
-    - debian/control: Add Breaks to ensure right version of udev is used.
-    - Use udev rules instead of init script:
-      + Add debian/45-fuse.rules: Put /dev/fuse into group fuse.
-      + debian/fuse-utils.postinst: Try to load the fuse module only if it's
-        still a module, remove it from /etc/modules/ anyway.
-      + debian/rules, debian/fuse-utils.install: Don't install the init
-        script; install the udev rule.
-    - initramfs support, for booting from ntfs-3g in wubi:
-      + debian/fuse-utils.initramfs-hook: Copy /sbin/mount.fuse and the fuse
-        kernel module into the initramfs. Use manual_add_modules not
-        force_load; fuse will be loaded automatically if necessary (it's a
-        built-in in Ubuntu anyway)
-      + debian/rules: Install above file into fuse-utils.
-      + debian/fuse-utils.postinst: Call update-initramfs.
-      + (Forwarded to Debian #505691)
-    - Create libfuse2-udeb and fuse-utils-udeb. (Forwarded to Debian #505697)
-    - debian/fuse-utils.install: Install ulockmgr_server.
-    - debian/{rules,libfuse2.install,fuse-utils.lintian}: Move fusermount and
-      ulockmgr_server to /bin and associated libraries to /lib. This allows
-      mounting ntfs filesystems in /etc/fstab. (Debian #452412)
-    - debian/{rules,fuse-utils.postinst}: Install fusermount with 4755
-      permissions (remaining change from "Dynamic foreground user access").
-    - debian/fuse-utils.postinst:
-      + Don't fail if udev is running and /dev/fuse does not exist.
-        (Forwarded to Debian #505685)
-    - debian/fuse-utils.preinst:
-      + Remove the module configuration file on upgrade if unmodified.
-      + Remove old rules file if unchanged
-
- -- Colin Watson <cjwatson@ubuntu.com>  Wed, 13 Oct 2010 12:20:43 +0100
-
 fuse (2.8.4-1.1) unstable; urgency=low
 
   * Non-maintainer upload.
@@ -291,42 +460,6 @@ fuse (2.8.4-1.1) unstable; urgency=low
     Updated patch by Petr Salinger, thanks.
 
  -- Michael Biebl <biebl@debian.org>  Sat, 18 Sep 2010 22:11:07 +0200
-
-fuse (2.8.4-1ubuntu1) maverick; urgency=low
-
-  * Resynchronise with Debian (fixing hang with auditd, LP: #634554).
-    Remaining changes:
-    - debian/control: Add Breaks to ensure right version of udev is used.
-    - Use udev rules instead of init script:
-      + Add debian/45-fuse.rules: Put /dev/fuse into group fuse.
-      + debian/fuse-utils.postinst: Try to load the fuse module only if it's
-        still a module, remove it from /etc/modules/ anyway.
-      + debian/rules, debian/fuse-utils.install: Don't install the init
-        script; install the udev rule.
-    - initramfs support, for booting from ntfs-3g in wubi:
-      + debian/fuse-utils.initramfs-hook: Copy /sbin/mount.fuse and the fuse
-        kernel module into the initramfs. Use manual_add_modules not
-        force_load; fuse will be loaded automatically if necessary (it's a
-        built-in in Ubuntu anyway)
-      + debian/rules: Install above file into fuse-utils.
-      + debian/fuse-utils.postinst: Call update-initramfs.
-      + (Forwarded to Debian #505691)
-    - Create libfuse2-udeb and fuse-utils-udeb. (Forwarded to Debian #505697)
-    - debian/fuse-utils.install: Install ulockmgr_server.
-    - debian/{rules,libfuse2.install,fuse-utils.lintian}: Move fusermount and
-      ulockmgr_server to /bin and associated libraries to /lib. This allows
-      mounting ntfs filesystems in /etc/fstab. (Debian #452412)
-    - debian/{rules,fuse-utils.postinst}: Install fusermount with 4755
-      permissions (remaining change from "Dynamic foreground user access").
-    - debian/fuse-utils.postinst:
-      + Don't fail if udev is running and /dev/fuse does not exist.
-        (Forwarded to Debian #505685)
-    - debian/fuse-utils.preinst:
-      + Remove the module configuration file on upgrade if unmodified.
-      + Remove old rules file if unchanged
-  * Re-enable 000-Build_system_do_not_install_init_script patch.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Fri, 24 Sep 2010 12:09:38 +0100
 
 fuse (2.8.4-1) unstable; urgency=low
 
@@ -343,50 +476,6 @@ fuse (2.8.1-1.2) unstable; urgency=high
   * Fixed CVE-2009-3297: race condition in fusermount (Closes: #567633)
 
  -- Giuseppe Iuculano <iuculano@debian.org>  Sun, 31 Jan 2010 22:23:35 +0100
-
-fuse (2.8.1-1.1ubuntu2) lucid; urgency=low
-
-  * SECURITY UPDATE: local attacker can trick fuse into unmounting a
-    filesystem from the wrong location.
-    - debian/patches/200-fix_mount_symlink_handling: upstream
-      fixes.
-    - CVE-2009-3297
-
- -- Kees Cook <kees@ubuntu.com>  Mon, 25 Jan 2010 17:10:52 -0800
-
-fuse (2.8.1-1.1ubuntu1) lucid; urgency=low
-
-  * Merge with Debian testing (lp: #506958). Remaining changes: 
-    - debian/control: Add Breaks to ensure right version of udev is used.
-    - Use udev rules instead of init script:
-      + Add debian/45-fuse.rules: Put /dev/fuse into group fuse.
-      + debian/fuse-utils.postinst: Try to load the fuse module only if it's
-        still a module, remove it from /etc/modules/ anyway.
-      + debian/rules, debian/fuse-utils.install: Don't install the init
-        script; install the udev rule.
-    - initramfs support, for booting from ntfs-3g in wubi:
-      + debian/fuse-utils.initramfs-hook: Copy /sbin/mount.fuse and the fuse
-        kernel module into the initramfs. Use manual_add_modules not
-        force_load; fuse will be loaded automatically if necessary (it's a
-        built-in in Ubuntu anyway)
-      + debian/rules: Install above file into fuse-utils.
-      + debian/fuse-utils.postinst: Call update-initramfs.
-      + (Forwarded to Debian #505691)
-    - Create libfuse2-udeb and fuse-utils-udeb. (Forwarded to Debian #505697)
-    - debian/fuse-utils.install: Install ulockmgr_server.
-    - debian/{rules,libfuse2.install,fuse-utils.lintian}: Move fusermount and
-      ulockmgr_server to /bin and associated libraries to /lib. This allows
-      mounting ntfs filesystems in /etc/fstab. (Debian #452412)
-    - debian/{rules,fuse-utils.postinst}: Install fusermount with 4755
-      permissions (remaining change from "Dynamic foreground user access").
-    - debian/fuse-utils.postinst:
-      + Don't fail if udev is running and /dev/fuse does not exist.
-        (Forwarded to Debian #505685)
-    - debian/fuse-utils.preinst:
-      + Remove the module configuration file on upgrade if unmodified.
-      + Remove old rules file if unchanged
-
- -- Michael Bienia <geser@ubuntu.com>  Wed, 13 Jan 2010 14:48:39 +0100
 
 fuse (2.8.1-1.1) unstable; urgency=low
 
@@ -424,88 +513,6 @@ fuse (2.7.4-2) unstable; urgency=low
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Wed, 01 Jul 2009 21:00:52 +0200
 
-fuse (2.7.4-1.1ubuntu4.2) lucid; urgency=low
-
-  * debian/fuse-utils.initramfs-hook:
-    - use manual_add_modules not force_load; fuse will be loaded automatically
-      if necessary (it's a built-in in Ubuntu anyway)
-
- -- Scott James Remnant <scott@ubuntu.com>  Fri, 18 Dec 2009 02:19:06 +0000
-
-fuse (2.7.4-1.1ubuntu4.1) karmic-proposed; urgency=low
-
-  * debian/fuse-utils.postinst:
-    - do not fail if udev can not be reloaded (LP: #444979)
-
- -- Michael Vogt <michael.vogt@ubuntu.com>  Wed, 28 Oct 2009 10:34:02 +0100
-
-fuse (2.7.4-1.1ubuntu4) jaunty; urgency=low
-
-  * debian/fuse-utils.modprobe: Drop, we'll build this module into the kernel
-    and do this with the other kernel filesystems
-  * debian/fuse-utils.preinst: Remove on upgrade if unmodified
-  * debian/rules: Update
-  * debian/fuse-utils.install: Update
-  * debian/fuse-utils-udeb.install: Update
-  * debian/fuse-utils.postinst: Only try to load if it's still a module,
-    remove from /etc/modules anyway
-
- -- Scott James Remnant <scott@ubuntu.com>  Thu, 05 Mar 2009 17:18:15 +0000
-
-fuse (2.7.4-1.1ubuntu3) jaunty; urgency=low
-
-  * drop makedev from dependencies, we never used it anyway
-
- -- Oliver Grawert <ogra@ubuntu.com>  Wed, 14 Jan 2009 14:27:59 +0100
-
-fuse (2.7.4-1.1ubuntu2) jaunty; urgency=low
-
-  * debian/rules: Install udev rules into /lib/udev/rules.d
-  * debian/fuse-utils.install: Update path
-  * debian/fuse-utils.preinst: Remove old rules file if unchanged.
-  * debian/control: Add Breaks to ensure right version of udev is used.
-
- -- Scott James Remnant <scott@ubuntu.com>  Fri, 09 Jan 2009 16:15:56 +0000
-
-fuse (2.7.4-1.1ubuntu1) jaunty; urgency=low
-
-  * Merge with Debian unstable. Remaining Ubuntu changes:
-    - Use udev rules instead of init script:
-      + Add debian/45-fuse.rules: Put /dev/fuse into group fuse.
-      + Add debian/fuse-utils.modprobe: Mount/Umount fusectl fs on module
-        loading/unloading.
-      + debian/fuse-utils.postinst: Load fuse module and add it to
-        /etc/modules, so that it is loaded at boot time.
-      + debian/rules, debian/fuse-utils.install: Don't install the init
-        script; install the udev rule and the module configuration file instead.
-      + (Not forwarded to Debian; lots of effort for a questionably small boot
-        speed improvement, and will be obsolete with proper upstart scripts.)
-    - debian/fuse-utils.install: Install ulockmgr_server.
-    - debian/fuse-utils.postinst: Don't fail if udev is running and /dev/fuse
-      does not exist. (Forwarded to Debian #505685)
-    - debian/{rules,libfuse2.install,fuse-utils.lintian}: Move fusermount and
-      ulockmgr_server to /bin and associated libraries to /lib. This allows
-      mounting ntfs filesystems in /etc/fstab. (Debian #452412)
-    - Create libfuse2-udeb and fuse-utils-udeb. (Forwarded to Debian #505697)
-    - initramfs support, for booting from ntfs-3g in wubi:
-      + debian/fuse-utils.initramfs-hook: Copy /sbin/mount.fuse and the fuse
-        kernel module into the initramfs.
-      + debian/rules: Install above file into fuse-utils.
-      + debian/fuse-utils.postinst: Call update-initramfs.
-      + (Forwarded to Debian #505691)
-    - Dynamic foreground user access: (Ubuntu specific until Debian uses
-      ACL-enabled hal)
-      + debian/fuse-utils.postinst: Keep /bin/fusermount as world executable.
-        It already bails out correctly if the user does not have access to
-        /dev/fuse; no reason to control access to it in two different places,
-        and the permissions of the binary can't be changed in a flexible way.
-      + Add debian/10-fuse-permissions.fdi: Enable hal's dynamic ACL
-        management for /dev/fuse, so that local foreground consoles will have
-        access to it.
-      + debian/fuse-utils.install: Install FDI.
-
- -- Martin Pitt <martin.pitt@ubuntu.com>  Fri, 14 Nov 2008 13:58:50 +0100
-
 fuse (2.7.4-1.1) unstable; urgency=low
 
   * Non-maintainer upload.
@@ -539,41 +546,6 @@ fuse (2.7.3-5) unstable; urgency=low
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Sun, 10 Aug 2008 17:55:28 +0200
 
-fuse (2.7.3-4ubuntu2) intrepid; urgency=low
-
-  * debian/fuse-utils.postinst: Install /bin/fusermount as world executable.
-    it already bails out correctly if the user does not have access to
-    /dev/fuse; no reason to control access to it in two different places (and
-    the permissions of the binary can't be changed in a flexible way).
-  * Add debian/10-fuse-permissions.fdi: Enable hal's dynamic ACL management
-    for /dev/fuse, so that local foreground consoles will have access to it.
-    Install it in debian/fuse-utils.install.
-  * Drop debian/fuse-utils-needs-users-added-to-fuse-group.update-notifier and
-    its installation in the postinst, it's not really relevant any more.
-  * See intrepid-device-permissions spec for details.
-
- -- Martin Pitt <martin.pitt@ubuntu.com>  Thu, 25 Sep 2008 17:47:10 +0200
-
-fuse (2.7.3-4ubuntu1) intrepid; urgency=low
-
-  * Merge from debian unstable, remaining changes:
-    - Don't install the init script; install the udev rule and the module
-      configuration file instead.
-    - debian/45-fuse.rules: set /dev/fuse group to fuse.
-    - debian/fuse-utils.modprobe: module configuration file that mounts the
-      control filesystem when fuse is loaded and unmounts it when fuse is
-      unloaded, along with checking that the control FS is mounting before
-      unmounting it.
-    - debian/fuse-utils.install: add the udev rule, the module configuration
-      file, and ulockmgr_server.
-    - Load fuse on install, and set it so it gets loaded on reboot.
-    - Move fusermount and ulockmgr_server to /bin and associated libraries
-      to /lib.
-    - Create libfuse2-udeb and fuse-utils-udeb.
-    - Copy /sbin/mount.fuse and the fuse kernel module into the initramfs.
-
- -- Oliver Grawert <ogra@ubuntu.com>  Tue, 06 May 2008 12:42:09 +0100
-
 fuse (2.7.3-4) unstable; urgency=low
 
   * Fix device node group after first-time-install (Closes: #473545).
@@ -599,33 +571,6 @@ fuse (2.7.3-1) unstable; urgency=low
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Wed, 12 Mar 2008 21:18:46 +0100
 
-fuse (2.7.2-1ubuntu2) hardy; urgency=low
-
-  * add update-notifier message about required fuse group membership
-  * use /bin/sh in fuse-utils.postinst instead of /bin/bash
-
- -- Oliver Grawert <ogra@ubuntu.com>  Tue, 26 Feb 2008 16:50:45 +0100
-
-fuse (2.7.2-1ubuntu1) hardy; urgency=low
-
-  * Resynchronise with Debian. Remaining changes:
-    - Don't install the init script; install the udev rule and the module
-      configuration file instead.
-    - debian/45-fuse.rules: set /dev/fuse group to fuse.
-    - debian/fuse-utils.modprobe: module configuration file that mounts the
-      control filesystem when fuse is loaded and unmounts it when fuse is
-      unloaded, along with checking that the control FS is mounting before
-      unmounting it.
-    - debian/fuse-utils.install: add the udev rule, the module configuration
-      file, and ulockmgr_server.
-    - Load fuse on install, and set it so it gets loaded on reboot.
-    - Move fusermount and ulockmgr_server to /bin and associated libraries
-      to /lib.
-    - Create libfuse2-udeb and fuse-utils-udeb.
-    - Copy /sbin/mount.fuse and the fuse kernel module into the initramfs.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Tue, 29 Jan 2008 10:38:39 +0000
-
 fuse (2.7.2-1) unstable; urgency=low
 
   * New upstream release.
@@ -634,51 +579,11 @@ fuse (2.7.2-1) unstable; urgency=low
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Sat, 05 Jan 2008 02:35:33 +0100
 
-fuse (2.7.1-2ubuntu1) hardy; urgency=low
-
-  * Resynchronise with Debian. Remaining changes:
-    - Don't install the init script; install the udev rule and the module
-      configuration file instead.
-    - debian/45-fuse.rules: set /dev/fuse group to fuse.
-    - debian/fuse-utils.modprobe: module configuration file that mounts the
-      control filesystem when fuse is loaded and unmounts it when fuse is
-      unloaded, along with checking that the control FS is mounting before
-      unmounting it.
-    - debian/fuse-utils.install: add the udev rule, the module configuration
-      file, and ulockmgr_server.
-    - Load fuse on install, and set it so it gets loaded on reboot.
-    - Move fusermount and ulockmgr_server to /bin and associated libraries
-      to /lib.
-    - Create libfuse2-udeb and fuse-utils-udeb.
-    - Copy /sbin/mount.fuse and the fuse kernel module into the initramfs.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Fri, 30 Nov 2007 15:43:28 +0000
-
 fuse (2.7.1-2) unstable; urgency=low
 
   * Add 002-Fix_umounting_when_mtab_is_a_symlink patch (Closes: #448855).
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Fri, 23 Nov 2007 15:27:17 +0100
-
-fuse (2.7.1-1ubuntu1) hardy; urgency=low
-
-  * Resynchronise with Debian. Remaining changes:
-    - Don't install the init script; install the udev rule and the module
-      configuration file instead.
-    - debian/45-fuse.rules: set /dev/fuse group to fuse.
-    - debian/fuse-utils.modprobe: module configuration file that mounts the
-      control filesystem when fuse is loaded and unmounts it when fuse is
-      unloaded, along with checking that the control FS is mounting before
-      unmounting it.
-    - debian/fuse-utils.install: add the udev rule, the module configuration
-      file, and ulockmgr_server.
-    - Load fuse on install, and set it so it gets loaded on reboot.
-    - Move fusermount and ulockmgr_server to /bin and associated libraries
-      to /lib.
-    - Create libfuse2-udeb and fuse-utils-udeb.
-    - Copy /sbin/mount.fuse and the fuse kernel module into the initramfs.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Thu, 22 Nov 2007 17:01:50 +0000
 
 fuse (2.7.1-1) unstable; urgency=low
 
@@ -701,50 +606,6 @@ fuse (2.7.0-2) unstable; urgency=low
   * Drop ucf dependency, useless (Closes: #439079).
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Mon, 01 Oct 2007 19:22:53 +0200
-
-fuse (2.7.0-1ubuntu5) gutsy; urgency=low
-
-  * Add udeb shlibs entries.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Wed, 19 Sep 2007 00:08:51 +0100
-
-fuse (2.7.0-1ubuntu4) gutsy; urgency=low
-
-  * Copy the fuse kernel module into the initramfs.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Thu, 06 Sep 2007 23:07:48 +0100
-
-fuse (2.7.0-1ubuntu3) gutsy; urgency=low
-
-  * Copy /sbin/mount.fuse into the initramfs.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Thu, 09 Aug 2007 21:54:47 +0100
-
-fuse (2.7.0-1ubuntu2) gutsy; urgency=low
-
-  * Create libfuse2-udeb and fuse-utils-udeb.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Thu, 09 Aug 2007 21:25:33 +0100
-
-fuse (2.7.0-1ubuntu1) gutsy; urgency=low
-
-  * Resynchronise with Debian (LP: #128292). Remaining changes:
-    - Don't install the init script; install the udev rule and the module
-      configuration file instead.
-    - debian/45-fuse.rules: set /dev/fuse group to fuse.
-    - debian/fuse-utils.modprobe: module configuration file that mounts the
-      control filesystem when fuse is loaded and unmounts it when fuse is
-      unloaded, along with checking that the control FS is mounting before
-      unmounting it.
-    - debian/fuse-utils.install: add the udev rule, the module configuration
-      file, and ulockmgr_server.
-    - Load fuse on install, and set it so it gets loaded on reboot.
-    - Move fusermount and ulockmgr_server to /bin and associated libraries
-      to /lib.
-  * Use dpkg-query to fetch conffile md5sums rather than parsing
-    /var/lib/dpkg/status directly.
-
- -- Colin Watson <cjwatson@ubuntu.com>  Sat, 04 Aug 2007 08:09:00 +0100
 
 fuse (2.7.0-1) unstable; urgency=low
 
@@ -777,57 +638,6 @@ fuse (2.6.5-2) unstable; urgency=low
   * Update debian/watch.
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Thu, 17 May 2007 12:56:42 +0200
-
-fuse (2.6.5-1ubuntu3) gutsy; urgency=low
-
-  [ Phillip Lougher ]
-
-  * WriteSupportForNTFS
-
-    - move install location of fusermount and ulockmgr_server from
-      /usr/bin to /bin
-    - move install location of libraries libfuse.so.2.6.5 and
-      libulockmgr.so.1.0.1 and their lib*.so.* symlinks from /usr/lib
-      to /lib
-    - fix up libfuse-dev library symlinks libfuse.so and libulockmgr.so in
-      /usr/lib to point to new location of libfuse.so.2.6.5 and
-      libulockmgr.so.1.0.1 libraries in debian/rules
-
-  * Add omitted distclean of example directory in debian/rules
-
-  [ Colin Watson ]
-
-  * Migrate old statoverrides for /usr/bin/fusermount to /bin/fusermount.
-
- -- Phillip Lougher <phillip@ubuntu.com>  Fri, 03 Aug 2007 02:41:29 +0100
-
-fuse (2.6.5-1ubuntu2) gutsy; urgency=low
-
-  * drop postinst code for MAKEDEV and udevcontrol reload_rules we dont need
-    either in ubuntu and it most likely fixes the /dev/fuse ownership problems
-    from launchpad bug 5105.
-
- -- Oliver Grawert <ogra@ubuntu.com>  Mon, 18 Jun 2007 17:20:14 +0200
-
-fuse (2.6.5-1ubuntu1) gutsy; urgency=low
-
-  * Merge from Debian unstable.
-  * Remaining Ubuntu changes:
-    - Don't install the init script, install the udev rule and the
-      module configuration file instead.
-    - debian/45-fuse.rules: set /dev/fuse group to fuse.
-    - debian/fuse-utils.modprobe : module configuration file that mount
-      the control filesystem when fuse is loaded and unmount it when fuse
-      is unloaded, along with checking that the control FS is mounting before
-      unmounting it.
-    - debian/fuse-utils.install: add the udev rule, the module conf. file and
-      ulockmgr_server.
-    - Load fuse on install, and set it so it gets loaded on reboot.
-    - Munge Maintainer field as per spec.
-  * Ubuntu changes dropped:
-    - lib/mount.fuse: fix bashism.
-
- -- Steve Kowalik <stevenk@ubuntu.com>  Sat,  2 Jun 2007 23:56:06 +1000
 
 fuse (2.6.5-1) unstable; urgency=low
 
@@ -881,34 +691,6 @@ fuse (2.6.3-2) unstable; urgency=low
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Thu,  8 Mar 2007 22:10:31 +0100
 
-fuse (2.6.3-1ubuntu2) feisty; urgency=low
-
-  * debian/fuse-utils.modprobe : don't use the "-w" flag with grep, not
-    compatible with grep used in the initrd (Closes LP: #87767).
-
- -- Michael Bienia <geser@ubuntu.com>  Mon, 12 Mar 2007 21:31:42 +0100
-
-fuse (2.6.3-1ubuntu1) feisty; urgency=low
-
-  * Merge from Debian unstable, remaining changes:
-    - lib/mount.fuse: fix bashism.
-    - debian/45-fuse.rules: set /dev/fuse group to fuse.
-    - debian/fuse-utils.modprobe:
-      + module configuration file that mount the control filesystem when fuse
-        is loaded and unmount it when fuse is unloaded. Full replacement of
-        the init script. (ogra rocks ;) )
-      + check that the control fs is mounted before unmounting it.
-    - debian/rules: don't install the init script, install the udev rule and
-      the module configuration file instead.
-    - debian/fuse-utils.install: add the udev rule, the module conf. file and
-      ulockmgr_server.
-    - debian/fuse-utils.postinst: load fuse and make sure that fuse is still
-      loaded at boot time.
-  * debian/control: Change Maintainer/XSBC-Original-Maintainer field.
-  * UVF exception: LP: #90919
-
- -- Michael Bienia <geser@ubuntu.com>  Mon, 12 Mar 2007 16:49:42 +0100
-
 fuse (2.6.3-1) unstable; urgency=HIGH
 
   * Urgency set to HIGH as it fixes a critical and a serious bug.
@@ -920,31 +702,6 @@ fuse (2.6.3-1) unstable; urgency=HIGH
   * Add watch file.
 
  -- Adam Cécile (Le_Vert) <gandalf@le-vert.net>  Wed,  7 Feb 2007 10:35:29 +0100
-
-fuse (2.6.2-1ubuntu2) feisty; urgency=low
-
-  * debian/fuse-utils.modprobe : check that the control fs is mounted before
-    unmounting it.
-  * Move udev rule from 80-fuse.rules to 45-fuse.rules.
-
- -- Florent Mertens <flomertens@gmail.com>  Wed,  7 Feb 2007 17:59:27 +0100
-
-fuse (2.6.2-1ubuntu1) feisty; urgency=low
-
-  * Merge from debian unstable, remaining changes:
-    - lib/mount.fuse : fix bashism.
-    - debian/80-fuse.rules :  set /dev/fuse group to fuse.
-    - debian/fuse-utils.modprobe : module configuration file that mount
-      the control filesystem when fuse is loaded and unmount it when fuse
-      is unloaded. Full replacement of the init script. (ogra rocks ;) )
-    - debian/rules : don't install the init script, install the udev rule
-      and the module configuration file instead.
-    - debian/fuse-utils.install : add the udev rule, the module conf. file
-      and ulockmgr_server.
-    - debian/fuse-utils.postinst : load fuse and make sure that fuse
-      is still loaded at boot time.
-
- -- Florent Mertens <flomertens@gmail.com>  Wed, 31 Jan 2007 10:21:57 +0000
 
 fuse (2.6.2-1) unstable; urgency=low
 
@@ -958,30 +715,6 @@ fuse (2.6.2-1) unstable; urgency=low
   * ACK NMU thanks! (Closes: #404904)
 
  -- Bartosz Fenski <fenio@debian.org>  Tue, 30 Jan 2007 22:32:38 +0100
-
-fuse (2.5.3-4.1ubuntu3) feisty; urgency=low
-  
-  *  Ensure the correct alignment of the ccmsg array in receive_fd()
-     from lib/mount.c by declaring it as size_t instead of char and
-     adjusting the size accordingly. This resolves the issue of
-     sshfs crashing with SIGBUS on sparc. Thanks to Sebastian Fontius
-     for debugging and testing, and to Miklos Szeredi for the patch.
-     (closes: #404904)
-
- -- Fabio M. Di Nitto <fabbione@ubuntu.com>  Tue, 09 Jan 2007 08:11:06 +0100
-
-fuse (2.5.3-4.1ubuntu2) feisty; urgency=low
-
-  * Stop the fuse-utils postinst from failing if we can't load the module
-    (say, if we happen to be installing in a chroot, while building a livefs)
-
- -- Adam Conrad <adconrad@ubuntu.com>  Thu, 30 Nov 2006 15:47:44 +1100
-
-fuse (2.5.3-4.1ubuntu1) feisty; urgency=low
-
-  * Merge from debian unstable.
-
- -- Oliver Grawert <ogra@ubuntu.com>  Mon, 30 Oct 2006 12:01:18 +0000
 
 fuse (2.5.3-4.1) unstable; urgency=low
 
@@ -1012,40 +745,6 @@ fuse (2.5.3-3) unstable; urgency=low
   * Includes notice that fuse is available in recent kernels. (Closes: #369993)
 
  -- Bartosz Fenski <fenio@debian.org>  Mon, 14 Aug 2006 13:29:31 +0200
-
-fuse (2.5.3-2.1ubuntu4) edgy; urgency=low
-
-  * remove the debian modprobe code and the useless udev reload from 
-    fuse-utils.postinst. it hangs the install if fuse is already 
-    loaded (closes malone #65235)
-
- -- Oliver Grawert <ogra@ubuntu.com>  Thu, 12 Oct 2006 10:47:29 +0200
-
-fuse (2.5.3-2.1ubuntu3) edgy; urgency=low
-
-  * add a line to fuse-utils postinst to make sure the module gets loaded
-    even after a reboot
-
- -- Oliver Grawert <ogra@ubuntu.com>  Fri, 29 Sep 2006 10:50:43 +0200
-
-fuse (2.5.3-2.1ubuntu2) edgy; urgency=low
-
-  * added versioned dependency on makedev (>= 2.3.1-80) closes malone #51456
-
- -- Oliver Grawert <ogra@ubuntu.com>  Mon,  3 Jul 2006 20:07:14 +0200
-
-fuse (2.5.3-2.1ubuntu1) edgy; urgency=low
-
-  * Merge from debian unstable.
-
- -- Oliver Grawert <ogra@ubuntu.com>  Thu, 29 Jun 2006 11:01:27 +0100
-
-fuse (2.5.3-2.1) unstable; urgency=high
-
-  * Non-maintainer upload.
-  * Don't delete /dev/fuse in postrm. (Closes: #372142)
-
- -- Faidon Liambotis <paravoid@debian.org>  Wed, 14 Jun 2006 01:51:39 +0300
 
 fuse (2.5.3-2) unstable; urgency=low
 
@@ -1109,48 +808,6 @@ fuse (2.5.1-1) unstable; urgency=low
 
  -- Bartosz Fenski <fenio@debian.org>  Thu,  2 Feb 2006 01:08:40 +0100
 
-fuse (2.4.2-0ubuntu4) edgy; urgency=low
-
-  * Write directly to the fuse uevent file, rather than using udevplug
-    which has gone away.
-
- -- Scott James Remnant <scott@ubuntu.com>  Wed,  7 Jun 2006 22:20:01 +0100
-
-fuse (2.4.2-0ubuntu3) dapper; urgency=low
-
-  * debian/fuse-utils.postrm:
-    - Move group deletion from preinst to postinst (after dpkg-statoverride)
-      to not break the statoverride.
-    - Add missing is_true function (copied from preinst).
-    - Closes: LP#5774
-  * Removed now useless debian/fuse-utils.prerm.
-  * debian/fuse-utils.postinst: 
-    - Reload udev to make the newly created group known to udev.
-    - Load the fuse module or re-udevplug it if already loaded to ensure
-      proper permissions.
-
- -- Martin Pitt <martin.pitt@ubuntu.com>  Thu, 11 May 2006 18:31:53 +0200
-
-fuse (2.4.2-0ubuntu2) dapper; urgency=low
-
-  * Add udev rules file 
-
- -- Dennis Kaarsemaker <dennis@mirage>  Thu,  9 Mar 2006 14:33:22 +0100
-
-fuse (2.4.2-0ubuntu1) dapper; urgency=low
-
-  * New upstream release:
-    - [SECURITY]: Don't allow mountpoints with '\n', '\t' or '\\' as
-      they corrupt /etc/mtab (CVE-2005-3531).
-    - Optimize buffer reallocation in fill_dir.
-    - Fix compilation of kernel module for differing source and build
-      directories.
-    - Don't use system() to invoke ''fusermount -u'' due to delimiting
-      of whitespace as arguments.
-    - Act appropriately after detecting in-kernel (mainline) FUSE code.
-
- -- Daniel T Chen <crimsun@fungus.sh.nu>  Wed, 30 Nov 2005 06:47:31 -0800
-
 fuse (2.4.1-0.1) unstable; urgency=high
 
   * Non-maintainer upload (waited long enough to see simple but ugly bugs to
@@ -1164,12 +821,6 @@ fuse (2.4.1-0.1) unstable; urgency=high
     has never worked as expected and has been PITA instead! closes: #298829)
 
  -- Eduard Bloch <blade@debian.org>  Thu, 29 Dec 2005 12:31:26 +0100
-
-fuse (2.4.1-0ubuntu1) dapper; urgency=low
-
-  * New upstream release.
-
- -- Daniel T Chen <crimsun@fungus.sh.nu>  Fri, 28 Oct 2005 15:38:22 -0700
 
 fuse (2.4.0-1) unstable; urgency=low
 
@@ -1210,13 +861,6 @@ fuse (2.3.0-2) unstable; urgency=high
   * Fixes problems with building as non-root (Closes: #310764)
 
  -- Bartosz Fenski <fenio@debian.org>  Sun, 19 Jun 2005 18:43:11 +0200
-
-fuse (2.3.0-1ubuntu1) breezy; urgency=low
-
-  * Resynchronise with Debian.
-  * Sponsored for Sami Haahtinen (Closes Ubuntu #10215)
-
- -- Stephan Hermann <sh@sourcecode.de>  Sun, 24 Jul 2005 15:44:22 +0200
 
 fuse (2.3.0-1) unstable; urgency=high
 
@@ -1270,13 +914,6 @@ fuse (2.2.1-2) unstable; urgency=low
       Thanks to Felipe Augusto van de Wiel.
 
  -- Bartosz Fenski <fenio@debian.org>  Thu, 24 Mar 2005 21:59:11 +0100
-
-fuse (2.2.1-1ubuntu1) hoary; urgency=low
-
-  * switch to linux-image.
-  * thanks, Fabbio, for checking.
-
- -- Daniel Holbach <dh@mailempfang.de>  Fri, 18 Mar 2005 13:08:15 +0100
 
 fuse (2.2.1-1) unstable; urgency=high
 
