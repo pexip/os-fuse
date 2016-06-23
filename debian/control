@@ -6,8 +6,9 @@ Build-Depends:
  debhelper (>= 9),
  dh-autoreconf,
  libselinux-dev [linux-any],
-Standards-Version: 3.9.5
-Homepage: http://fuse.sourceforge.net/
+ gettext
+Standards-Version: 3.9.8
+Homepage: https://github.com/libfuse/libfuse/wiki
 #Vcs-Browser: http://daniel-baumann.ch/gitweb/?p=debian/packages/fuse.git
 #Vcs-Git: git://daniel-baumann.ch/git/debian/packages/fuse.git
 
@@ -20,8 +21,7 @@ Depends:
  libfuse2 (= ${binary:Version}),
  adduser,
  mount (>= 2.19.1),
- sed (>= 4),
- udev | makedev,
+ sed (>= 4)
 Description: Filesystem in Userspace
  Filesystem in Userspace (FUSE) is a simple interface for userspace programs to
  export a virtual filesystem to the Linux kernel. It also aims to provide a
