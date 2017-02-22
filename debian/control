@@ -7,7 +7,7 @@ XSBC-Original-Maintainer: Daniel Baumann <daniel.baumann@progress-technologies.n
 Build-Depends: debhelper (>= 8), autotools-dev, libselinux-dev [linux-any]
 Standards-Version: 3.9.2
 Homepage: http://fuse.sourceforge.net/
-XS-Pexip-Upstream: http://archive.ubuntu.com/ubuntu/ precise
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie
 
 Package: fuse
 Section: utils
