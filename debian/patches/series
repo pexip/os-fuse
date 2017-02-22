@@ -1,7 +1,7 @@
-01-initscript.patch
-02-kfreebsd.patch
-03-examples.patch
-04-cve-2011-0542.patch
-05-umount-nofollow.patch
-06-clone_newns.patch
-CVE-2015-3202.patch
+0001-initscript.patch
+0002-kfreebsd.patch
+0003-examples.patch
+0004-fusermount-manpage.patch
+0005-dlsym.patch
+0006-arm64.patch
+0007-CVE-2015-3202.patch

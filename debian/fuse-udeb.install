@@ -1,3 +1,2 @@
 bin/fusermount
-bin/ulockmgr_server
 sbin/mount.fuse
