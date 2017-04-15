@@ -4,6 +4,11 @@ set -e
 
 case "${1}" in
 	configure)
+		if ! getent group fuse > /dev/null 2>&1
+		then
+			addgroup --system fuse
+		fi
+
 		if [ -c /dev/cuse ]
 		then
 			chmod 0600 /dev/cuse > /dev/null 2>&1
@@ -34,10 +39,17 @@ case "${1}" in
 
 				cd /dev
 				MAKEDEV fuse
-				chmod 0666 /dev/fuse
+				chown root:fuse /dev/fuse
+				chmod 0660 /dev/fuse
 			else
 				echo "MAKEDEV not installed, skipping device node creation."
 			fi
+		fi
+
+		if [ -z "$2" ]
+		then
+			chown root:fuse /etc/fuse.conf
+			chmod 0640 /etc/fuse.conf
 		fi
 
 		if [ -x /usr/sbin/update-initramfs ]

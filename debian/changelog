@@ -1,6 +1,13 @@
 fuse (2.9.3-15+deb8u2pexip1) pexip; urgency=low
 
   * Migrate to Jessie
+  * Retain the following changes from Ubuntu:
+    - debian/fuse.postinst:
+      + Only change the ownership or mode of /etc/fuse.conf
+        on initial installation.
+      + Create fuse group
+    - debian/fuse.udev:
+      + Ensure only fuse group can use /dev/fuse 
 
  -- John-Mark Bell <jmb@pexip.com>  Wed, 22 Feb 2017 14:17:52 +0000
 
