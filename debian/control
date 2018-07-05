@@ -11,7 +11,7 @@ Standards-Version: 3.9.5
 Homepage: http://fuse.sourceforge.net/
 #Vcs-Browser: http://daniel-baumann.ch/gitweb/?p=debian/packages/fuse.git
 #Vcs-Git: git://daniel-baumann.ch/git/debian/packages/fuse.git
-XS-Pexip-Upstream: http://ftp.debian.org/debian/ jessie
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ stretch
 
 Package: fuse
 Section: utils
