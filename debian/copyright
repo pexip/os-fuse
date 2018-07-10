@@ -12,7 +12,7 @@ Copyright: 2001-2013 Miklos Szeredi <miklos@szeredi.hu>
 License: LGPL-2
 
 Files: debian/*
-Copyright: 2014 Laszlo Boszormenyi (GCS) <gcs@debian.org>,
+Copyright: 2014- Laszlo Boszormenyi (GCS) <gcs@debian.org>,
  2011-2014 Daniel Baumann <mail@daniel-baumann.ch>
 License: GPL-2+
 

@@ -14,6 +14,10 @@ export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 %:
 	dh ${@} --parallel --with autoreconf
 
+override_dh_autoreconf:
+	ln -s /usr/share/gettext/config.rpath $(CURDIR)
+	dh_autoreconf
+
 override_dh_auto_configure:
 	dh_auto_configure -- --bindir=/bin --libdir=/usr/lib/$(DEB_HOST_MULTIARCH)
 
@@ -48,7 +52,7 @@ override_dh_install:
 	install -D -m 0755 debian/local/fuse.hook debian/fuse/usr/share/initramfs-tools/hooks/fuse
 
 	# adding kmod integration
-	install -D -m 0644 debian/local/fuse.kmod debian/fuse/lib/modules-load.d/fuse.conf
+#	install -D -m 0644 debian/local/fuse.kmod debian/fuse/lib/modules-load.d/fuse.conf
 
 override_dh_link:
 	# correcting symlink targets
@@ -64,3 +68,8 @@ override_dh_makeshlibs:
 
 override_dh_strip:
 	dh_strip --dbg-package=fuse-dbg
+
+.PHONY: override_dh_autoreconf override_dh_auto_configure \
+	override_dh_builddeb override_dh_compress override_dh_fixperms \
+	override_dh_install override_dh_link override_dh_makeshlibs \
+	override_dh_strip

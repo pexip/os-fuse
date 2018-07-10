@@ -2,6 +2,16 @@
 
 set -e
 
+chrooted() {
+	if [ "$(stat -c %d/%i /)" = "$(stat -Lc %d/%i /proc/1/root 2>/dev/null)" ]; then
+		# the devicenumber/inode pair of / is the same as that of
+		# /sbin/init's root, so we're *not* in a chroot and hence
+		# return false.
+		return 1
+	fi
+	return 0
+}
+
 case "${1}" in
 	configure)
 		if ! getent group fuse > /dev/null 2>&1
@@ -9,7 +19,7 @@ case "${1}" in
 			addgroup --system fuse
 		fi
 
-		if [ -c /dev/cuse ]
+		if [ -c /dev/cuse ] && ! chrooted
 		then
 			chmod 0600 /dev/cuse > /dev/null 2>&1
 		fi
@@ -20,7 +30,7 @@ case "${1}" in
 
 		modprobe fuse > /dev/null 2>&1 || true
 
-		if lsmod | grep -qs fuse
+		if [ -x /sbin/lsmod ] && lsmod | grep -qs fuse
 		then
 			if udevadm control --reload-rules > /dev/null 2>&1
 			then
