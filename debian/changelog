@@ -1,3 +1,11 @@
+fuse (2.9.7-1+deb9u1) stretch-security; urgency=high
+
+  * Non-maintainer upload by the Security Team.
+  * Restriction bypass of the "allow_other" option when SELinux is active
+    (CVE-2018-10906) (Closes: #904439)
+
+ -- Salvatore Bonaccorso <carnil@debian.org>  Thu, 26 Jul 2018 08:39:27 +0200
+
 fuse (2.9.7-1) unstable; urgency=low
 
   * New upstream release.
