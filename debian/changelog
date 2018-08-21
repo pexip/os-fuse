@@ -1,3 +1,10 @@
+fuse (2.9.7-1+deb9u2) stretch; urgency=medium
+
+  * Whitelist autofs as mountpoint file system.
+  * Whitelist FAT as mountpoint file system (closes: #905366).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Tue, 21 Aug 2018 17:26:05 +0000
+
 fuse (2.9.7-1+deb9u1) stretch-security; urgency=high
 
   * Non-maintainer upload by the Security Team.

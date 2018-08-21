@@ -9,3 +9,5 @@ CVE-2018-10906/0002-fusermount-don-t-feed-escaped-commas-into-mount-opti.patch
 CVE-2018-10906/0003-fusermount-bail-out-on-transient-config-read-failure.patch
 CVE-2018-10906/0004-fusermount-refuse-unknown-options.patch
 CVE-2018-10906/0005-fusermount-whitelist-known-good-filesystems-for-moun.patch
+0007-Add_autofs_to_mountpoint_file_system_whitelist.patch
+0008-Add_FAT_to_mountpoint_file_system_whitelist.patch
