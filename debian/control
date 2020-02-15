@@ -12,7 +12,7 @@ Standards-Version: 3.9.8
 Homepage: https://github.com/libfuse/libfuse/wiki
 #Vcs-Browser: http://daniel-baumann.ch/gitweb/?p=debian/packages/fuse.git
 #Vcs-Git: git://daniel-baumann.ch/git/debian/packages/fuse.git
-XS-Pexip-Upstream: http://ftp.debian.org/debian/ stretch
+XS-Pexip-Upstream: http://ftp.debian.org/debian/ buster
 
 Package: fuse
 Section: utils
