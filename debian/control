@@ -4,11 +4,10 @@ Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
 Build-Depends:
- debhelper (>= 9),
- dh-autoreconf,
+ debhelper (>= 11),
  libselinux-dev [linux-any],
  gettext
-Standards-Version: 3.9.8
+Standards-Version: 4.3.0
 Homepage: https://github.com/libfuse/libfuse/wiki
 #Vcs-Browser: http://daniel-baumann.ch/gitweb/?p=debian/packages/fuse.git
 #Vcs-Git: git://daniel-baumann.ch/git/debian/packages/fuse.git
@@ -29,23 +28,6 @@ Description: Filesystem in Userspace
  export a virtual filesystem to the Linux kernel. It also aims to provide a
  secure method for non privileged users to create and mount their own filesystem
  implementations.
-
-Package: fuse-dbg
-Section: debug
-Priority: extra
-Architecture: linux-any kfreebsd-any
-Depends:
- ${misc:Depends},
- fuse (= ${binary:Version}) [linux-any],
- libfuse2 (= ${binary:Version}),
- libfuse-dev (= ${binary:Version}),
-Description: Filesystem in Userspace (debug)
- Filesystem in Userspace (FUSE) is a simple interface for userspace programs to
- export a virtual filesystem to the Linux kernel. It also aims to provide a
- secure method for non privileged users to create and mount their own filesystem
- implementations.
- .
- This package contains the debugging symbols.
 
 Package: libfuse2
 Section: libs

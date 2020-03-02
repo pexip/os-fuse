@@ -1201,6 +1201,49 @@ static int get_path_wrlock(struct fuse *f, fuse_ino_t nodeid, const char *name,
 	return get_path_common(f, nodeid, name, path, wnode);
 }
 
+#if defined(__FreeBSD__)
+#define CHECK_DIR_LOOP
+#endif
+
+#if defined(CHECK_DIR_LOOP)
+static int check_dir_loop(struct fuse *f,
+			  fuse_ino_t nodeid1, const char *name1,
+			  fuse_ino_t nodeid2, const char *name2)
+{
+	struct node *node, *node1, *node2;
+	fuse_ino_t id1, id2;
+
+	node1 = lookup_node(f, nodeid1, name1);
+	id1 = node1 ? node1->nodeid : nodeid1;
+
+	node2 = lookup_node(f, nodeid2, name2);
+	id2 = node2 ? node2->nodeid : nodeid2;
+
+	for (node = get_node(f, id2); node->nodeid != FUSE_ROOT_ID;
+	     node = node->parent) {
+		if (node->name == NULL || node->parent == NULL)
+			break;
+
+		if (node->nodeid != id2 && node->nodeid == id1)
+			return -EINVAL;
+	}
+
+	if (node2)
+	{
+		for (node = get_node(f, id1); node->nodeid != FUSE_ROOT_ID;
+		     node = node->parent) {
+			if (node->name == NULL || node->parent == NULL)
+				break;
+
+			if (node->nodeid != id1 && node->nodeid == id2)
+				return -ENOTEMPTY;
+		}
+	}
+
+	return 0;
+}
+#endif
+
 static int try_get_path2(struct fuse *f, fuse_ino_t nodeid1, const char *name1,
 			 fuse_ino_t nodeid2, const char *name2,
 			 char **path1, char **path2,
@@ -1230,6 +1273,17 @@ static int get_path2(struct fuse *f, fuse_ino_t nodeid1, const char *name1,
 	int err;
 
 	pthread_mutex_lock(&f->lock);
+
+#if defined(CHECK_DIR_LOOP)
+	if (name1)
+	{
+		// called during rename; perform dir loop check
+		err = check_dir_loop(f, nodeid1, name1, nodeid2, name2);
+		if (err)
+			goto out_unlock;
+	}
+#endif
+
 	err = try_get_path2(f, nodeid1, name1, nodeid2, name2,
 			    path1, path2, wnode1, wnode2);
 	if (err == -EAGAIN) {
@@ -1250,6 +1304,10 @@ static int get_path2(struct fuse *f, fuse_ino_t nodeid1, const char *name1,
 		debug_path(f, "DEQUEUE PATH1", nodeid1, name1, !!wnode1);
 		debug_path(f, "        PATH2", nodeid2, name2, !!wnode2);
 	}
+
+#if defined(CHECK_DIR_LOOP)
+out_unlock:
+#endif
 	pthread_mutex_unlock(&f->lock);
 
 	return err;
@@ -3421,10 +3479,14 @@ static int fill_dir(void *dh_, const char *name, const struct stat *statp,
 	}
 
 	if (off) {
+		if (dh->filled) {
+			dh->error = -EIO;
+			return 1;
+		}
+
 		if (extend_contents(dh, dh->needlen) == -1)
 			return 1;
 
-		dh->filled = 0;
 		newlen = dh->len +
 			fuse_add_direntry(dh->req, dh->contents + dh->len,
 					  dh->needlen - dh->len, name,
@@ -3432,6 +3494,8 @@ static int fill_dir(void *dh_, const char *name, const struct stat *statp,
 		if (newlen > dh->needlen)
 			return 1;
 	} else {
+		dh->filled = 1;
+
 		newlen = dh->len +
 			fuse_add_direntry(dh->req, NULL, 0, name, NULL, 0);
 		if (extend_contents(dh, newlen) == -1)
@@ -3461,7 +3525,7 @@ static int readdir_fill(struct fuse *f, fuse_req_t req, fuse_ino_t ino,
 		dh->len = 0;
 		dh->error = 0;
 		dh->needlen = size;
-		dh->filled = 1;
+		dh->filled = 0;
 		dh->req = req;
 		fuse_prepare_interrupt(f, req, &d);
 		err = fuse_fs_readdir(f->fs, path, dh, fill_dir, off, fi);
@@ -4359,7 +4423,9 @@ int fuse_getgroups(int size, gid_t list[])
 
 int fuse_interrupted(void)
 {
-	return fuse_req_interrupted(fuse_get_context_internal()->req);
+	struct fuse_context_i *c = fuse_get_context_internal();
+
+	return c->req ? fuse_req_interrupted(c->req) : 0;
 }
 
 void fuse_set_getcontext_func(struct fuse_context *(*func)(void))
