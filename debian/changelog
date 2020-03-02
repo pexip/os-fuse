@@ -1,3 +1,9 @@
+fuse (2.9.9-1pexip1) pexip; urgency=medium
+
+  * Migrate to Buster
+
+ -- Vincent Sanders <vince@pexip.com>  Mon, 02 Mar 2020 10:25:05 +0000
+
 fuse (2.9.9-1) unstable; urgency=medium
 
   * New upstream release.
