@@ -1,6 +1,7 @@
 fuse (2.9.9-1pexip1) pexip; urgency=medium
 
   * Migrate to Buster
+  * Reinstate fuse.udev to enforce device node permissions correctly
 
  -- Vincent Sanders <vince@pexip.com>  Mon, 02 Mar 2020 10:25:05 +0000
 

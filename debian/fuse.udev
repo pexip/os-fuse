@@ -1,0 +1,1 @@
+KERNEL=="fuse", MODE="0660", GROUP="fuse" OPTIONS+="static_node=fuse"
