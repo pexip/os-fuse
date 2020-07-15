@@ -1,3 +1,9 @@
+fuse (2.9.9-1+deb10u1pexip3) pexip; urgency=medium
+
+  * Rebuild in buster environment
+
+ -- Steve McIntyre <steve.mcintyre@pexip.com>  Wed, 15 Jul 2020 20:40:50 +0000
+
 fuse (2.9.9-1+deb10u1pexip2) pexip; urgency=medium
 
   * Rebuild in buster environment
