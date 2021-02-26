@@ -3,13 +3,11 @@ Section: utils
 Priority: optional
 Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
 Build-Depends:
- debhelper (>= 11),
+ debhelper-compat (= 11),
  libselinux-dev [linux-any],
  gettext
-Standards-Version: 4.3.0
+Standards-Version: 4.4.0
 Homepage: https://github.com/libfuse/libfuse/wiki
-#Vcs-Browser: http://daniel-baumann.ch/gitweb/?p=debian/packages/fuse.git
-#Vcs-Git: git://daniel-baumann.ch/git/debian/packages/fuse.git
 
 Package: fuse
 Section: utils
@@ -48,6 +46,7 @@ Description: Filesystem in Userspace (library)
 Package: libfuse-dev
 Section: libdevel
 Architecture: linux-any kfreebsd-any
+Multi-Arch: same
 Depends:
  ${misc:Depends},
  libfuse2 (= ${binary:Version}),
@@ -63,6 +62,7 @@ Description: Filesystem in Userspace (development)
 
 Package: fuse-udeb
 Package-Type: udeb
+Build-Profiles: <!noudeb>
 Architecture: linux-any
 Section: debian-installer
 Depends:
