@@ -11,7 +11,7 @@ Standards-Version: 4.3.0
 Homepage: https://github.com/libfuse/libfuse/wiki
 #Vcs-Browser: http://daniel-baumann.ch/gitweb/?p=debian/packages/fuse.git
 #Vcs-Git: git://daniel-baumann.ch/git/debian/packages/fuse.git
-XS-Pexip-Upstream: http://ftp.debian.org/debian/ buster
+XS-Pexip-Upstream: http://deb.debian.org/debian/ bullseye
 
 Package: fuse
 Section: utils
