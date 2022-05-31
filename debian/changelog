@@ -1,3 +1,37 @@
+fuse (2.9.9-5) unstable; urgency=medium
+
+  * Include HTML documentation in libfuse-dev (closes: #886449).
+
+  [ Antonio Terceiro <terceiro@debian.org> ]
+  * Mark libfuse-dev as Multi-Arch same (closes: #983477).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Fri, 26 Feb 2021 17:12:50 +0100
+
+fuse (2.9.9-4) unstable; urgency=medium
+
+  * Add upstream metadata.
+  * Update watch file.
+
+  [ Matthias Klose <doko@ubuntu.com> ]
+  * Allow building without udeb on request (closes: #983321).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Tue, 23 Feb 2021 18:50:11 +0100
+
+fuse (2.9.9-3) unstable; urgency=medium
+
+  * Don't explicitly remove fuse.conf on purge (closes: #953222).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sat, 07 Mar 2020 11:09:49 +0000
+
+fuse (2.9.9-2) unstable; urgency=medium
+
+  * Drop outdated udevadm commands from postinst (closes: #934457, #935496).
+  * Remove dh_makeshlibs override.
+  * Update Lintian overrides.
+  * Update Standards-Version to 4.4.0 .
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sat, 31 Aug 2019 14:44:22 +0000
+
 fuse (2.9.9-1+deb10u1pexip4) pexip; urgency=medium
 
   * debian/fuse.postinst: drop garbage logic
@@ -21,13 +55,6 @@ fuse (2.9.9-1+deb10u1pexip1) pexip; urgency=medium
   * New upstream version
 
  -- Steve McIntyre <steve.mcintyre@pexip.com>  Mon, 13 Jul 2020 14:41:35 +0100
-
-fuse (2.9.9-1+deb10u1) buster; urgency=medium
-
-  * Drop outdated udevadm commands from postinst (closes: #934457, #935496).
-  * Don't explicitly remove fuse.conf on purge (closes: #953222).
-
- -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Wed, 22 Apr 2020 19:38:47 +0000
 
 fuse (2.9.9-1pexip1) pexip; urgency=medium
 
