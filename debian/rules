@@ -13,7 +13,7 @@ endif
 DEB_BUILD_ARCH ?= $(shell dpkg-architecture -qDEB_BUILD_ARCH)
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
-export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all optimize=-lto
 
 %:
 	dh ${@}
@@ -41,7 +41,7 @@ override_dh_install:
 	rm -rf debian/tmp/etc/udev/
 	rm -f  debian/tmp/usr/lib/*/*.la
 
-	dh_install --fail-missing
+	dh_install
 
 	# adjusting /lib for multiarch
 	mkdir -p debian/libfuse2/lib/$(DEB_HOST_MULTIARCH)
