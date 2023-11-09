@@ -9,7 +9,7 @@ Build-Depends:
  gettext
 Standards-Version: 4.4.0
 Homepage: https://github.com/libfuse/libfuse/wiki
-XS-Pexip-Upstream: http://deb.debian.org/debian/ bullseye
+XS-Pexip-Upstream: http://deb.debian.org/debian/ bookworm
 
 Package: fuse
 Section: utils
