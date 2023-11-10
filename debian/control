@@ -4,10 +4,10 @@ Priority: optional
 Maintainer: Pexip AS <packaging@pexip.com>
 XSBC-Pexip-Original-Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
 Build-Depends:
- debhelper-compat (= 11),
+ debhelper-compat (= 13),
  libselinux-dev [linux-any],
  gettext
-Standards-Version: 4.4.0
+Standards-Version: 4.6.1
 Homepage: https://github.com/libfuse/libfuse/wiki
 XS-Pexip-Upstream: http://deb.debian.org/debian/ bookworm
 
