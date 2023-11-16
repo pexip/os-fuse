@@ -1,3 +1,9 @@
+fuse (2.9.9-6pexip1) pexip-bookworm; urgency=medium
+
+  * Initial bookworm build
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Thu, 16 Nov 2023 09:59:30 +0000
+
 fuse (2.9.9-6) unstable; urgency=medium
 
   * Disable link time optimization (closes: #1015408).
