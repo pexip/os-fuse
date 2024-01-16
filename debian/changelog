@@ -1,3 +1,9 @@
+fuse (2.9.9-6+b1pexip1) pexip-bookworm; urgency=medium
+
+  * Bump version number to supercede binNMU.
+
+ -- Mark Hymers <mark.hymers@pexip.com>  Tue, 16 Jan 2024 12:12:11 +0000
+
 fuse (2.9.9-6pexip2) pexip-bookworm; urgency=medium
 
   * Bookworm build for product distribution
