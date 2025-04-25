@@ -1,3 +1,50 @@
+fuse (2.9.9-9) unstable; urgency=medium
+
+  * Drop fuse-udeb and libfuse2-udeb packages (closes: #1079264).
+  * Drop fuse package.
+  * Make rebuildable.
+  * Update Standards-Version to 4.7.0 .
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Mon, 09 Sep 2024 19:58:44 +0200
+
+fuse (2.9.9-8.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Install utility programs into /usr (DEP17 M2).
+
+  [ Helmut Grohne ]
+  * Move fuse library to /usr and add DEP17 P1 M8 protective diversions.
+    (Closes: #1067817)
+  * Handle both canonial and aliased statoverride. (DEP17 P5) (Closes:
+    #1078151)
+
+ -- Chris Hofstaedtler <zeha@debian.org>  Tue, 13 Aug 2024 19:25:27 +0200
+
+fuse (2.9.9-8.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Rename libraries for 64-bit time_t transition. (Closes: #1062089)
+
+ -- Michael Hudson-Doyle <michael.hudson@ubuntu.com>  Fri, 01 Mar 2024 11:24:20 +1300
+
+fuse (2.9.9-8) unstable; urgency=medium
+
+  [ Helmut Grohne <helmut@subdivi.de> ]
+  * Fix /dev/fd/N support to handle the absence of a mountpoint.
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Tue, 07 Nov 2023 06:58:07 +0100
+
+fuse (2.9.9-7) unstable; urgency=medium
+
+  * Use no for Rules-Requires-Root.
+  * Update Standards-Version to 4.6.2 .
+
+  [ Helmut Grohne <helmut@subdivi.de> ]
+  * Cover libfuse2-udeb with the noudeb build profile (closes: #1024926).
+  * Backport support for /dev/fd/N (closes: #1055222).
+
+ -- Laszlo Boszormenyi (GCS) <gcs@debian.org>  Sun, 05 Nov 2023 13:44:31 +0100
+
 fuse (2.9.9-6+b1+pexip24u2) pexip-bookworm; urgency=medium
 
   * New versioning scheme

@@ -7,27 +7,14 @@ Build-Depends:
  debhelper-compat (= 13),
  libselinux-dev [linux-any],
  gettext
-Standards-Version: 4.6.1
+Standards-Version: 4.7.0
+Rules-Requires-Root: no
 Homepage: https://github.com/libfuse/libfuse/wiki
 XS-Pexip-Upstream: http://deb.debian.org/debian/ trixie
 
-Package: fuse
-Section: utils
-Architecture: linux-any
-Depends:
- ${misc:Depends},
- ${shlibs:Depends},
- libfuse2 (= ${binary:Version}),
- adduser,
- mount (>= 2.19.1),
- sed (>= 4)
-Description: Filesystem in Userspace
- Filesystem in Userspace (FUSE) is a simple interface for userspace programs to
- export a virtual filesystem to the Linux kernel. It also aims to provide a
- secure method for non privileged users to create and mount their own filesystem
- implementations.
-
-Package: libfuse2
+Package: libfuse2t64
+Provides: ${t64:Provides}
+Replaces: libfuse2
 Section: libs
 Architecture: linux-any kfreebsd-any
 Multi-Arch: same
@@ -35,8 +22,8 @@ Pre-Depends: ${misc:Pre-Depends}
 Depends:
  ${misc:Depends},
  ${shlibs:Depends},
-Conflicts: fuse (<< ${binary:Version})
-Suggests: fuse
+Conflicts: fuse (<< ${binary:Version}), libfuse2 (<< ${source:Version})
+Suggests: fuse3
 Description: Filesystem in Userspace (library)
  Filesystem in Userspace (FUSE) is a simple interface for userspace programs to
  export a virtual filesystem to the Linux kernel. It also aims to provide a
@@ -51,9 +38,9 @@ Architecture: linux-any kfreebsd-any
 Multi-Arch: same
 Depends:
  ${misc:Depends},
- libfuse2 (= ${binary:Version}),
+ libfuse2t64 (= ${binary:Version}),
  libselinux-dev [linux-any],
-Suggests: fuse
+Suggests: fuse3
 Description: Filesystem in Userspace (development)
  Filesystem in Userspace (FUSE) is a simple interface for userspace programs to
  export a virtual filesystem to the Linux kernel. It also aims to provide a
@@ -61,23 +48,3 @@ Description: Filesystem in Userspace (development)
  implementations.
  .
  This package contains the development files.
-
-Package: fuse-udeb
-Package-Type: udeb
-Build-Profiles: <!noudeb>
-Architecture: linux-any
-Section: debian-installer
-Depends:
- ${misc:Depends},
- ${shlibs:Depends},
- libfuse2-udeb (= ${binary:Version}),
-Description: Filesystem in Userspace
-
-Package: libfuse2-udeb
-Package-Type: udeb
-Architecture: linux-any kfreebsd-any
-Section: debian-installer
-Depends:
- ${misc:Depends},
- ${shlibs:Depends},
-Description: Filesystem in Userspace (library)
